@@ -629,5 +629,10 @@ SAP knowledge base + local search + RAG-style explanation + modern UI
 
 This makes SAP navigation easier, faster, and more beginner-friendly. 🚀
 
+⭐ Support
+If you found this project useful, consider giving it a ⭐ on GitHub.
+
+Happy building! 🚀
+
 ```
 ```
