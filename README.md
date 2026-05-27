@@ -1,17 +1,11 @@
-Absolutely. Replace your current root `README.md` with this polished GitHub version.
-
-Copy everything below and paste it into:
-
-```text
-SAP-TCODE-ASSISTANT/README.md
-```
+Here is the updated `README.md` content. Copy and replace your current `README.md` with this version.
 
 ````md
 # 🚀 SAP S/4HANA T-Code Assistant
 
-A modern **AI-powered SAP Transaction Code Assistant** that helps users find the right SAP S/4HANA T-Code from simple natural-language business needs.
+A modern **SAP Transaction Code Assistant** that helps users find the right SAP S/4HANA T-Code from simple natural-language business needs.
 
-Instead of remembering hundreds of SAP transaction codes, users can simply ask:
+Instead of remembering hundreds or thousands of SAP transaction codes, users can simply ask:
 
 > “check material”  
 > “create purchase order”  
@@ -19,59 +13,95 @@ Instead of remembering hundreds of SAP transaction codes, users can simply ask:
 > “create production order”  
 > “stock overview”
 
-And the app returns the best matching SAP T-Code with usage instructions. ✨
+And the app returns the best matching SAP T-Code with clear usage instructions, related alternatives, module details, and a confidence score. ✨
 
 ---
 
 ## 📌 Project Overview
 
-SAP has thousands of transaction codes across modules like MM, FI, SD, PP, QM, PM, WM, and more. Remembering the right T-Code can be difficult, especially for beginners, consultants, support teams, and business users.
+SAP has thousands of transaction codes across modules like **MM, FI, SD, PP, QM, PM, WM, IM, CO, PS, HR**, and more.
 
-This project solves that problem by combining:
+For beginners, consultants, support teams, and business users, remembering the correct transaction code can be difficult. This project solves that problem by converting a structured SAP S/4HANA T-Code knowledge base into a searchable assistant.
 
-- 🔎 Fast local search
-- 🧠 AI-generated usage guidance
-- 📚 SAP S/4HANA T-Code knowledge base
-- 🎨 Clean React + Tailwind UI
-- ⚡ FastAPI backend
-- 🤖 OpenRouter LLM integration
+The system can work in two modes:
+
+1. **Fast Local RAG Mode** ⚡  
+   Uses the local `sap_tcodes.json` knowledge base and a deterministic RAG-style response generator.
+
+2. **Optional OpenRouter LLM Mode** 🤖  
+   Can be connected to OpenRouter when richer AI-generated explanations are needed.
+
+This makes the project flexible:
+
+- Use **Local RAG** for speed, zero cost, and reliability.
+- Use **OpenRouter** when you want more natural, conversational explanations.
+
+---
+
+## 🧠 What This Project Does
+
+The assistant takes a user’s business need and maps it to the best SAP transaction code.
+
+Example:
+
+```text
+User: I want to check material details
+````
+
+Output:
+
+```text
+Recommended T-Code: MM03
+Module: Materials Management
+Purpose: Display Material
+
+How to use in SAP:
+1. Open SAP Easy Access.
+2. Enter MM03 in the command field.
+3. Press Enter.
+4. Enter the material number.
+5. Select the required views.
+6. Review the material master data.
+```
 
 ---
 
 ## 🎯 Key Features
 
-✅ Search SAP T-Codes using plain English  
-✅ Get recommended T-Code instantly  
-✅ See module name, description, and match score  
-✅ View related alternative T-Codes  
-✅ Copy T-Code with one click  
-✅ AI-generated usage instructions  
-✅ Clean dark UI with modern dashboard design  
-✅ Backend API with FastAPI  
-✅ Frontend built with React, Vite, and Tailwind CSS  
-✅ Uses structured SAP T-Code JSON data  
-✅ OpenRouter model support  
+✅ Search SAP T-Codes using plain English
+✅ Get recommended T-Code instantly
+✅ See module name, description, and match score
+✅ View related alternative T-Codes
+✅ Copy T-Code with one click
+✅ Local RAG-style explanation generation
+✅ Optional OpenRouter LLM support
+✅ No mandatory paid API dependency
+✅ Clean dark UI with modern dashboard design
+✅ Backend API with FastAPI
+✅ Frontend built with React, Vite, and Tailwind CSS
+✅ Uses structured SAP T-Code JSON data
+✅ Works well for SAP beginners, consultants, and support teams
 
 ---
 
-## 🧠 Example Searches
+## 🧩 RAG Concept Used in This Project
 
-| User Search | Recommended T-Code | Purpose |
-|---|---:|---|
-| check material | MM03 | Display Material |
-| create material | MM01 | Create Material |
-| change material | MM02 | Change Material |
-| create purchase order | ME21N | Create Purchase Order |
-| display purchase order | ME23N | Display Purchase Order |
-| create production order | CO01 | Production Order Create |
-| display production order | CO03 | Production Order Display |
-| stock overview | MMBE | Stock Overview |
-| display sales order | VA03 | Display Sales Order |
-| post incoming payment | F-28 | Post Incoming Payments |
+This project uses a simple and practical version of **RAG**, which stands for:
+
+```text
+Retrieval-Augmented Generation
+```
+
+In simple terms:
+
+> First, the app searches the SAP T-Code knowledge base.
+> Then, it generates an answer using only the retrieved matching records.
+
+This avoids random guessing and keeps the result grounded in the local SAP data.
 
 ---
 
-## 🖼️ Application Flow
+## 🔎 Local RAG Flow
 
 ```text
 User Query
@@ -82,26 +112,190 @@ FastAPI Backend
    ↓
 SAP T-Code Search Engine
    ↓
-Top Matching T-Codes
+Retrieve Top Matching T-Codes from sap_tcodes.json
    ↓
-OpenRouter LLM
+Local RAG Answer Generator
    ↓
 Usage Instructions + Related Codes
-````
+```
+
+Example:
+
+```text
+User Query: create production order
+```
+
+The backend searches `sap_tcodes.json`, retrieves the best matches, and returns:
+
+```text
+CO01 - Production Order Create
+```
+
+Then the local RAG generator creates beginner-friendly usage instructions.
 
 ---
 
-## 🏗️ Architecture
+## 🤖 Optional OpenRouter Flow
+
+OpenRouter can be used when you want richer natural-language explanations.
+
+```text
+User Query
+   ↓
+React Frontend
+   ↓
+FastAPI Backend
+   ↓
+SAP T-Code Search Engine
+   ↓
+Retrieve Top Matching T-Codes
+   ↓
+OpenRouter LLM
+   ↓
+Polished AI Explanation
+```
+
+OpenRouter is optional. The app can run without it.
+
+Use OpenRouter when you want:
+
+* More human-like explanations
+* Better phrasing
+* More flexible usage guidance
+* Advanced reasoning over retrieved T-Code candidates
+
+Use Local RAG when you want:
+
+* Faster responses
+* Zero API cost
+* No internet dependency
+* Predictable output
+* Better control over answers
+
+---
+
+## ⚖️ Local RAG vs OpenRouter
+
+| Mode       | Best For                              |             Cost |     Speed | Internet Required |
+| ---------- | ------------------------------------- | ---------------: | --------: | ----------------: |
+| Local RAG  | Fast T-Code lookup and usage guidance |             Free | Very fast |                No |
+| OpenRouter | Richer AI-generated explanations      | Depends on model |    Slower |               Yes |
+
+Recommended approach:
+
+```text
+Default: Local RAG
+Optional: OpenRouter
+```
+
+For the current MVP, **Local RAG is the best choice** because the SAP T-Code data already exists in structured JSON format.
+
+---
+
+## 🧠 Example Searches
+
+| User Search              | Recommended T-Code | Purpose                  |
+| ------------------------ | -----------------: | ------------------------ |
+| check material           |               MM03 | Display Material         |
+| create material          |               MM01 | Create Material          |
+| change material          |               MM02 | Change Material          |
+| create purchase order    |              ME21N | Create Purchase Order    |
+| display purchase order   |              ME23N | Display Purchase Order   |
+| create production order  |               CO01 | Production Order Create  |
+| display production order |               CO03 | Production Order Display |
+| stock overview           |               MMBE | Stock Overview           |
+| display sales order      |               VA03 | Display Sales Order      |
+| post incoming payment    |               F-28 | Post Incoming Payments   |
+
+---
+
+## 🖼️ Application Flow
+
+### Default Local RAG Flow
+
+```text
+User Query
+   ↓
+React Frontend
+   ↓
+FastAPI Backend
+   ↓
+search.py
+   ↓
+sap_tcodes.json
+   ↓
+Top Matching SAP T-Codes
+   ↓
+llm_client.py Local RAG Generator
+   ↓
+Final Usage Instructions
+```
+
+### Optional OpenRouter Flow
+
+```text
+User Query
+   ↓
+React Frontend
+   ↓
+FastAPI Backend
+   ↓
+search.py
+   ↓
+sap_tcodes.json
+   ↓
+Top Matching SAP T-Codes
+   ↓
+OpenRouter Model
+   ↓
+AI-generated Usage Instructions
+```
+
+---
+
+## 🏗️ Tech Stack
+
+### Frontend
+
+* React
+* Vite
+* Tailwind CSS
+* Axios
+* Lucide React Icons
+
+### Backend
+
+* Python
+* FastAPI
+* Uvicorn
+* RapidFuzz
+* Pydantic
+
+### Data Layer
+
+* Markdown source file
+* Converted JSON knowledge base
+* `sap_tcodes.json`
+
+### Optional AI Layer
+
+* OpenRouter API
+* Free or paid OpenRouter models
+
+---
+
+## 📁 Project Structure
 
 ```text
 sap-tcode-assistant/
+│
 ├── backend/
 │   ├── app/
 │   │   ├── main.py
 │   │   ├── data_loader.py
 │   │   ├── search.py
-│   │   ├── schemas.py
-│   │   └── llm_client.py
+│   │   ├── llm_client.py
+│   │   └── schemas.py
 │   │
 │   ├── data/
 │   │   ├── SAP_S4_HANA_T_Code.md
@@ -110,8 +304,8 @@ sap-tcode-assistant/
 │   ├── scripts/
 │   │   └── convert_md_to_json.py
 │   │
-│   ├── .env.example
-│   └── requirements.txt
+│   ├── requirements.txt
+│   └── .env
 │
 ├── frontend/
 │   ├── src/
@@ -123,64 +317,11 @@ sap-tcode-assistant/
 │   │
 │   ├── package.json
 │   ├── tailwind.config.js
+│   ├── postcss.config.js
 │   └── vite.config.js
 │
-├── .gitignore
 └── README.md
 ```
-
----
-
-## 🧰 Tech Stack
-
-### Frontend 🎨
-
-* React
-* Vite
-* Tailwind CSS
-* Axios
-* Lucide React Icons
-
-### Backend ⚙️
-
-* Python
-* FastAPI
-* Uvicorn
-* Pydantic
-* RapidFuzz
-* HTTPX
-* Python Dotenv
-
-### AI / LLM 🤖
-
-* OpenRouter API
-* Free model routing via `openrouter/free`
-* Prompt-controlled SAP usage explanation
-
-### Data 📚
-
-* SAP S/4HANA T-Code Markdown source
-* Converted structured JSON knowledge base
-* 3,750 SAP transaction records
-
----
-
-## 📂 Data Source
-
-The original SAP S/4HANA T-Code document was converted into structured JSON format.
-
-Each record contains:
-
-```json
-{
-  "tcode": "MM03",
-  "description": "Display Material",
-  "module": "MM",
-  "module_name": "Materials Management"
-}
-```
-
-This makes the data easy to search, rank, and pass into the LLM for explanation.
 
 ---
 
@@ -192,24 +333,11 @@ Go to the backend folder:
 cd backend
 ```
 
-Create virtual environment:
+Create and activate virtual environment:
 
 ```bash
 python -m venv .venv
-```
-
-Activate virtual environment:
-
-### macOS / Linux
-
-```bash
 source .venv/bin/activate
-```
-
-### Windows
-
-```bash
-.venv\Scripts\activate
 ```
 
 Install dependencies:
@@ -218,26 +346,13 @@ Install dependencies:
 python -m pip install -r requirements.txt
 ```
 
-Create your environment file:
-
-```bash
-cp .env.example .env
-```
-
-Update `backend/.env`:
-
-```env
-OPENROUTER_API_KEY=your_openrouter_api_key_here
-OPENROUTER_MODEL=openrouter/free
-```
-
-Run backend:
+Run backend server:
 
 ```bash
 python -m uvicorn app.main:app --reload
 ```
 
-Backend will run at:
+Backend runs at:
 
 ```text
 http://127.0.0.1:8000
@@ -280,7 +395,7 @@ Run frontend:
 npm run dev
 ```
 
-Frontend will run at:
+Frontend runs at:
 
 ```text
 http://localhost:5173
@@ -288,34 +403,42 @@ http://localhost:5173
 
 ---
 
-## 🚀 Running the Full App
+## 🔐 Optional OpenRouter Setup
 
-You need two terminals.
+OpenRouter is optional. Use it only if you want AI-generated explanations instead of local RAG-style explanations.
 
-### Terminal 1: Backend
-
-```bash
-cd backend
-source .venv/bin/activate
-python -m uvicorn app.main:app --reload
-```
-
-### Terminal 2: Frontend
-
-```bash
-cd frontend
-npm run dev
-```
-
-Then open:
+Create or update:
 
 ```text
-http://localhost:5173
+backend/.env
+```
+
+Add:
+
+```env
+OPENROUTER_API_KEY=your_openrouter_api_key_here
+OPENROUTER_MODEL=deepseek/deepseek-chat-v3-0324:free
+```
+
+Important:
+
+```text
+Do not commit your .env file to GitHub.
+```
+
+Recommended `.gitignore`:
+
+```gitignore
+.env
+.venv/
+node_modules/
+__pycache__/
+dist/
 ```
 
 ---
 
-## 🔎 API Endpoints
+## 🧪 API Endpoints
 
 ### Health Check
 
@@ -323,7 +446,7 @@ http://localhost:5173
 GET /health
 ```
 
-Returns backend status and total SAP T-Code records.
+Returns backend status and number of loaded records.
 
 ### Get Modules
 
@@ -333,13 +456,13 @@ GET /modules
 
 Returns available SAP modules.
 
-### Search T-Codes
+### Search T-Code
 
 ```http
 POST /search
 ```
 
-Request:
+Example request:
 
 ```json
 {
@@ -349,7 +472,7 @@ Request:
 }
 ```
 
-Response:
+Example response:
 
 ```json
 {
@@ -369,115 +492,142 @@ Response:
 
 ---
 
-## 🧪 Sample Test Queries
+## 🧭 How the Search Works
 
-Try these in the UI:
+The search engine uses:
+
+* Fuzzy matching
+* Business-intent boosts
+* Module-aware ranking
+* Action-aware ranking
+* SAP-specific correction rules
+
+Example:
+
+```text
+create production order
+```
+
+The system prioritizes:
+
+```text
+CO01 - Production Order Create
+```
+
+instead of less relevant codes from other modules.
+
+---
+
+## 🧠 Why Local RAG Works Well Here
+
+This project does not need to train a model from scratch.
+
+The SAP T-Code knowledge already exists in a structured format:
+
+```text
+T-Code
+Description
+Module
+Module Name
+```
+
+So the best design is:
+
+```text
+Retrieve the best matching records first.
+Then generate an explanation from those retrieved records.
+```
+
+This makes the app:
+
+* Faster
+* Cheaper
+* Easier to debug
+* Less likely to hallucinate
+* More suitable for SAP lookup use cases
+
+---
+
+## 🚧 Future Enhancements
+
+Planned improvements:
+
+* ⭐ Save favorite T-Codes
+* 🕘 Recent search history
+* 📦 Module dashboard
+* 🔍 Semantic search with embeddings
+* 🧠 Optional vector database support
+* 🤖 Optional OpenRouter toggle in UI
+* 📄 Export usage instructions as PDF
+* 🧪 Automated backend tests
+* 🛡️ Better authorization and role-based recommendations
+* 🌐 Deployment to cloud
+
+---
+
+## 🧪 Suggested Test Queries
+
+Use these to validate the app:
 
 ```text
 check material
 create material
 change material
+stock overview
 create purchase order
 display purchase order
 create production order
 display production order
 mrp run
 display bom
-stock overview
 display sales order
-post incoming payment
+create sales order
+display inspection lot
+create maintenance order
+display equipment
 ```
-
----
-
-## 🔐 Security Notes
-
-Never commit real API keys.
-
-This project uses:
-
-```text
-backend/.env
-```
-
-for local secrets.
-
-The real `.env` file is ignored by Git.
-
-Only this safe file should be committed:
-
-```text
-backend/.env.example
-```
-
-Example:
-
-```env
-OPENROUTER_API_KEY=your_openrouter_api_key_here
-OPENROUTER_MODEL=openrouter/free
-```
-
----
-
-## 🧠 Why Search First, LLM Second?
-
-This app does **not** blindly ask an LLM to guess SAP T-Codes.
-
-Instead, it follows a safer architecture:
-
-```text
-User query → Local SAP T-Code search → Top candidates → LLM explanation
-```
-
-This reduces hallucination and keeps answers grounded in the actual SAP T-Code dataset.
-
----
-
-## 🛣️ Future Improvements
-
-Planned enhancements:
-
-* ⭐ Favorite T-Codes
-* 🕘 Recent searches
-* 📊 Module dashboard
-* 🔍 Semantic search with embeddings
-* 🧪 Automated test suite
-* 📁 Export search result as PDF
-* 🧠 Better SAP process synonyms
-* 👤 User login
-* 🌐 Cloud deployment
-* 🔗 ERP integration possibilities
-
----
-
-## 📚 Learning Outcomes
-
-This project demonstrates:
-
-* Building a real AI application
-* Converting unstructured SAP data into structured JSON
-* Creating a FastAPI backend
-* Building a React + Tailwind frontend
-* Implementing fuzzy search with RapidFuzz
-* Integrating an LLM through OpenRouter
-* Protecting API keys with `.env`
-* Preparing a full-stack app for GitHub
 
 ---
 
 ## 👨‍💻 Author
 
-Built by **Rajesh Kumar Sugumaran** 🚀
+Built as a practical AI + SAP learning project.
 
-A practical AI/ML engineering project focused on SAP, ERP, automation, and intelligent business process assistance.
+This project demonstrates:
+
+* SAP process knowledge
+* Python backend development
+* React frontend development
+* Local RAG-style architecture
+* Optional LLM integration
+* Practical AI assistant design
 
 ---
 
-## ⭐ Support
+## ✅ Current Status
 
-If you found this project useful, consider giving it a ⭐ on GitHub.
+```text
+MVP completed
+Frontend working
+Backend working
+SAP JSON data loaded
+Local RAG enabled
+OpenRouter optional
+```
 
-Happy building! 🚀
+---
+
+## 🌟 Summary
+
+The **SAP S/4HANA T-Code Assistant** helps users quickly find the correct SAP transaction code using simple business language.
+
+It combines:
+
+```text
+SAP knowledge base + local search + RAG-style explanation + modern UI
+```
+
+This makes SAP navigation easier, faster, and more beginner-friendly. 🚀
 
 ```
 ```
