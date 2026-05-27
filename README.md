@@ -627,6 +627,8 @@ It combines:
 SAP knowledge base + local search + RAG-style explanation + modern UI
 ```
 
+![alt text](4202.png)
+
 This makes SAP navigation easier, faster, and more beginner-friendly. 🚀
 
 ⭐ Support
